@@ -32,4 +32,5 @@
 *.app
 
 /completo
-main.exe.vscode
+main.exe
+.vscode
