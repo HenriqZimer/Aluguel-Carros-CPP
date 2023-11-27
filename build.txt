@@ -1,0 +1,1 @@
+g++ main.cpp src/Usuario/Usuario.cpp src/Carro/Carro.cpp src/Emprestimo/Emprestimo.cpp src/Utilities/Includes.cpp -o dist/Aluguel.exe && ./dist/Aluguel.exe
