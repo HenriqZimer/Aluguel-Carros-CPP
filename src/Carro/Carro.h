@@ -8,14 +8,10 @@ using namespace std;
 
 struct Carro {
   string modelo;
-  int ano;
   string cor;
-  string cliente;
-  string dataInicio;
-  string dataFim;
 };
 
 void cadastrarCarro(vector<Carro>& carros);
-void listarCarros(const vector<Carro>& carros);
+void listarCarros();
 
 #endif

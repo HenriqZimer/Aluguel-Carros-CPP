@@ -5,6 +5,7 @@
 #include <chrono> // É utilizado para especificar a duração do sono na função sleep_for.
 #include <iostream>
 #include <fstream>
+#include <set>
 
 using namespace std;
 

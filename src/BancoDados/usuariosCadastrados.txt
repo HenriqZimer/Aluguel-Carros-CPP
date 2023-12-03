@@ -1,10 +1,2 @@
-usuario1,senha1
-usuario1,senha1
 henrique,henrique
-henrique,henrique
-henrique,henrique
-henrique,henrique
-henrique,henrique
-vc,vc
-zimer,1234
-henrique,233
+gabriel,gabriel

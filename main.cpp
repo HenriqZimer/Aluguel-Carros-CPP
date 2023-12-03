@@ -54,7 +54,7 @@ int main() {
         cadastrarCarro(carrosCadastrados);
         break;
       case 4:
-        listarCarros(carrosCadastrados);
+        listarCarros();
         break;
       case 5:
         cadastrarEmprestimo();

@@ -1,9 +1,6 @@
 #include "Usuario.h"
 #include "../Utilities/Includes.h"
 
-using namespace std;
-
-
 bool verificarCredenciais(const string& username, const string& password) {
   try {
     ifstream arquivo("src/BancoDados/usuariosCadastrados.txt");
@@ -29,7 +26,6 @@ bool verificarCredenciais(const string& username, const string& password) {
   catch (const exception& e) {
     cerr << "Erro: " << e.what() << endl;
   }
-
   return false;
 }
 
@@ -58,22 +54,38 @@ void cadastrarUsuario() {
   pauseAndClear(2);
 }
 
-
-// Função para listar usuários cadastrados
 void listarUsuarios() {
   clear();
   ifstream arquivoUsuarios("src/BancoDados/usuariosCadastrados.txt");
 
-  if (arquivoUsuarios.is_open()) {
+  if (arquivoUsuarios.is_open() && arquivoUsuarios.peek() != ifstream::traits_type::eof()) {
     cout << "Lista de usuários cadastrados:\n";
+    set<string> usuariosExibidos;
+
     string linha;
     while (getline(arquivoUsuarios, linha)) {
-      cout << linha << endl;
+      size_t pos = linha.find(',');
+
+      if (pos != string::npos) {
+        string usuario = linha.substr(0, pos);
+        string informacoesUsuario = usuario;
+
+        if (usuariosExibidos.find(informacoesUsuario) == usuariosExibidos.end()) {
+          cout << "Usuário: " << usuario << endl;
+          usuariosExibidos.insert(informacoesUsuario);
+        }
+      }
+      else {
+        cerr << "Formato inválido no arquivo de usuários.\n";
+      }
     }
     arquivoUsuarios.close();
   }
   else {
-    cerr << "Erro ao abrir o arquivo de usuários.\n";
+    cout << "Nenhum usuário cadastrado.\n";
+    if (!arquivoUsuarios.is_open()) {
+      cerr << "Erro ao abrir o arquivo de usuários.\n";
+    }
   }
   pauseAndClear(2);
 }

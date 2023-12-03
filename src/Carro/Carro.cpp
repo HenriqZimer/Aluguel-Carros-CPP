@@ -1,12 +1,6 @@
 #include "Carro.h"
 #include "../Utilities/Includes.h"
 
-#include <iostream>
-#include <fstream>
-#include <set>
-
-using namespace std;
-
 void cadastrarCarro(vector<Carro>& carros) {
   Carro novoCarro;
 
@@ -17,24 +11,20 @@ void cadastrarCarro(vector<Carro>& carros) {
   cin.ignore();
   getline(cin, novoCarro.modelo);
 
-  cout << "Digite o ano do carro: ";
-  cin >> novoCarro.ano;
-
-  cout << "Digite a cor do carro: ";
+  cout << "Digite o cor do carro: ";
+  cin >> novoCarro.cor;
   cin.ignore();
-  getline(cin, novoCarro.cor);
 
   carros.push_back(novoCarro);
 
   ofstream arquivoCarros("src/BancoDados/carrosCadastrados.txt", ios::app);
 
   if (arquivoCarros.is_open()) {
-    arquivoCarros << novoCarro.modelo << "," << novoCarro.ano << "," << novoCarro.cor << "\n";
+    arquivoCarros << novoCarro.modelo << "," << novoCarro.cor << "\n";
     arquivoCarros.close();
 
     clear();
 
-    // Verificar se não houve erro durante a escrita
     if (arquivoCarros.fail()) {
       cout << "Erro ao escrever no arquivo de carros.\n";
     }
@@ -48,44 +38,39 @@ void cadastrarCarro(vector<Carro>& carros) {
   pauseAndClear(2);
 }
 
-void listarCarros(const vector<Carro>& carros) {
+void listarCarros() {
   clear();
-  if (carros.empty()) {
-    cout << "Nenhum carro cadastrado.\n";
-  }
-  else {
+
+  ifstream arquivoCarros("src/BancoDados/carrosCadastrados.txt");
+
+  if (arquivoCarros.is_open()) {
     cout << "Lista de carros cadastrados:\n";
-    ifstream arquivoCarros("src/BancoDados/carrosCadastrados.txt");
+    set<string> carrosExibidos;
 
-    if (arquivoCarros.is_open()) {
-      set<string> carrosExibidos;  // Conjunto para evitar duplicatas
+    string linha;
+    while (getline(arquivoCarros, linha)) {
+      size_t pos1 = linha.find(',');
 
-      string linha;
-      while (getline(arquivoCarros, linha)) {
-        size_t pos1 = linha.find(',');
-        size_t pos2 = linha.find(',', pos1 + 1);
+      if (pos1 != string::npos) {
+        string modelo = linha.substr(0, pos1);
+        string cor = linha.substr(pos1 + 1);
 
-        if (pos1 != string::npos && pos2 != string::npos) {
-          string modelo = linha.substr(0, pos1);
-          string anoStr = linha.substr(pos1 + 1, pos2 - pos1 - 1);
-          string cor = linha.substr(pos2 + 1);
+        string informacoesCarro = modelo + cor;
 
-          string informacoesCarro = modelo + anoStr + cor;
-
-          if (carrosExibidos.find(informacoesCarro) == carrosExibidos.end()) {
-            cout << "Modelo: " << modelo << ", Ano: " << anoStr << ", Cor: " << cor << endl;
-            carrosExibidos.insert(informacoesCarro);  // Adicionar ao conjunto de carros exibidos
-          }
-        }
-        else {
-          cerr << "Formato inválido no arquivo de carros.\n";
+        if (carrosExibidos.find(informacoesCarro) == carrosExibidos.end()) {
+          cout << "Modelo: " << modelo << ", Cor: " << cor << endl;
+          carrosExibidos.insert(informacoesCarro);
         }
       }
-      arquivoCarros.close();
+      else {
+        cerr << "Formato inválido no arquivo de carros.\n";
+      }
     }
-    else {
-      cerr << "Erro ao abrir o arquivo de carros.\n";
-    }
+    arquivoCarros.close();
   }
+  else {
+    cerr << "Erro ao abrir o arquivo de carros.\n";
+  }
+
   pauseAndClear(2);
 }
