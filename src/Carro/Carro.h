@@ -13,5 +13,6 @@ struct Carro {
 
 void cadastrarCarro(vector<Carro>& carros);
 void listarCarros();
+void apagarCarro();
 
 #endif

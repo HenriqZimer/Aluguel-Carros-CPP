@@ -74,3 +74,63 @@ void listarCarros() {
 
   pauseAndClear(2);
 }
+
+void apagarCarro() {
+  clear();
+  cout << "Apagar Carro\n";
+  printDivider();
+
+  string modeloCarroParaApagar;
+  cout << "Digite o modelo do carro que deseja apagar: ";
+  cin.ignore();
+  getline(cin, modeloCarroParaApagar);
+
+  ifstream arquivoEntrada("src/BancoDados/carrosCadastrados.txt");
+  ofstream arquivoSaida("src/BancoDados/temp.txt");
+
+  if (arquivoEntrada.is_open() && arquivoSaida.is_open()) {
+    bool carroEncontrado = false;
+    string linha;
+
+    while (getline(arquivoEntrada, linha)) {
+      size_t pos = linha.find(',');
+
+      if (pos != string::npos) {
+        string modeloCarro = linha.substr(0, pos);
+
+        if (modeloCarro == modeloCarroParaApagar) {
+          carroEncontrado = true;
+        }
+        else {
+          arquivoSaida << linha << endl;
+        }
+      }
+      else {
+        cerr << "Formato inválido no arquivo de carros.\n";
+      }
+    }
+
+    arquivoEntrada.close();
+    arquivoSaida.close();
+
+    if (remove("src/BancoDados/carrosCadastrados.txt") != 0) {
+      cerr << "Erro ao remover o arquivo original.\n";
+    }
+
+    if (rename("src/BancoDados/temp.txt", "src/BancoDados/carrosCadastrados.txt") != 0) {
+      cerr << "Erro ao renomear o arquivo temporário.\n";
+    }
+
+    if (carroEncontrado) {
+      cout << "Carro apagado com sucesso!\n";
+    }
+    else {
+      cout << "Carro não encontrado.\n";
+    }
+  }
+  else {
+    cerr << "Erro ao abrir os arquivos.\n";
+  }
+
+  pauseAndClear(2);
+}

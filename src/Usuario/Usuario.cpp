@@ -89,3 +89,55 @@ void listarUsuarios() {
   }
   pauseAndClear(2);
 }
+
+void apagarUsuario() {
+  clear();
+  cout << "Apagar Usuário\n";
+  printDivider();
+
+  string usuarioParaApagar;
+  cout << "Digite o nome de usuário que deseja apagar: ";
+  cin >> usuarioParaApagar;
+
+  ifstream arquivoEntrada("src/BancoDados/usuariosCadastrados.txt");
+  ofstream arquivoTemporario("src/BancoDados/temp.txt");
+
+  if (arquivoEntrada.is_open() && arquivoTemporario.is_open()) {
+    bool usuarioEncontrado = false;
+    string linha;
+
+    while (getline(arquivoEntrada, linha)) {
+      size_t pos = linha.find(',');
+
+      if (pos != string::npos) {
+        string usuario = linha.substr(0, pos);
+
+        if (usuario == usuarioParaApagar) {
+          usuarioEncontrado = true;
+        }
+        else {
+          arquivoTemporario << linha << endl;
+        }
+      }
+      else {
+        cerr << "Formato inválido no arquivo de usuários.\n";
+      }
+    }
+    arquivoEntrada.close();
+    arquivoTemporario.close();
+
+    remove("src/BancoDados/usuariosCadastrados.txt");
+    rename("src/BancoDados/temp.txt", "src/BancoDados/usuariosCadastrados.txt");
+
+    if (usuarioEncontrado) {
+      cout << "Usuário apagado com sucesso!\n";
+    }
+    else {
+      cout << "Usuário não encontrado.\n";
+    }
+  }
+  else {
+    cerr << "Erro ao abrir os arquivos.\n";
+  }
+  pauseAndClear(2);
+}

@@ -8,5 +8,6 @@ using namespace std;
 bool verificarCredenciais(const string& username, const string& password);
 void cadastrarUsuario();
 void listarUsuarios();
+void apagarUsuario();
 
 #endif

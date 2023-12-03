@@ -39,7 +39,12 @@ int main() {
       cout << "5. Cadastrar empréstimo de carro\n";
       cout << "6. Listar empréstimos\n";
       cout << "\n";
-      cout << "7. Sair\n";
+      cout << "-------- Deletar ------\n";
+      cout << "7. Deletar Usuario\n";
+      cout << "8. Deletar carro\n";
+      cout << "9. Deletar empréstimo\n";
+      cout << "\n";
+      cout << "10. Sair\n";
       cout << "Escolha uma opção: ";
       cin >> escolha;
 
@@ -63,13 +68,19 @@ int main() {
         listarEmprestimos();
         break;
       case 7:
+        apagarUsuario();
+        break;
+      case 8:
+        apagarCarro();
+        break;
+      case 9:
         cout << "Saindo do programa...\n";
         break;
       default:
         cout << "Opção inválida. Tente novamente.\n";
         break;
       }
-    } while (escolha != 7);
+    } while (escolha != 9);
   }
   else {
     clear();
