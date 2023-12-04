@@ -42,9 +42,8 @@ int main() {
       cout << "-------- Deletar ------\n";
       cout << "7. Deletar Usuario\n";
       cout << "8. Deletar carro\n";
-      cout << "9. Deletar empréstimo\n";
       cout << "\n";
-      cout << "10. Sair\n";
+      cout << "9. Sair\n";
       cout << "Escolha uma opção: ";
       cin >> escolha;
 

@@ -1,2 +1,0 @@
-Modelo: gol, Cor: azul
-Cliente: henrique, Data de início: 2020, Data de término: 2030

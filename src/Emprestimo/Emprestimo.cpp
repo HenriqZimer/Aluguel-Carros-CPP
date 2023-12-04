@@ -62,6 +62,5 @@ void listarEmprestimos() {
   else {
     cerr << "Erro ao abrir o arquivo de empréstimos.\n";
   }
-
   pauseAndClear(2);
 }
